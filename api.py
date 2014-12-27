@@ -8,7 +8,9 @@ cars = [{'color': 'red', 'brand': 'BMW', 'plateNumber': '567hghh', 'id': 1}, {'c
 def GET_specific_cars(car_id):
 	for i in range(len(cars)):
                 if (str(cars[i]['id']) == str(car_id)):
-                        return str(json.dumps(cars[i]))
+			return_obj = {}
+			return_obj['car'] = cars[i]
+                        return str(json.dumps(return_obj))
         return "id doesn't exist"
 
 
