@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,request
 import json
 app = Flask(__name__)
 
@@ -10,8 +10,14 @@ def GET_cars():
 
 @app.route("/cars",methods=['POST'])
 def POST_cars():
-	return str(json.dumps(cars))
-
+	args = json.loads(request.data)
+	newCar = {}
+	newCar['color'] = args['color'] 
+	newCar['brand'] = args['brand']
+	newCar['plateNumber'] =  args['plateNumber']
+	newCar['id'] = len(cars)
+	cars.append(newCar)
+	return str(json.dumps(newCar))
 
 if __name__ == "__main__":
 	app.debug = True;
