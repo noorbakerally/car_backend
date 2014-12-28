@@ -16,7 +16,9 @@ def GET_specific_cars(car_id):
 
 @app.route("/cars",methods=['GET'])
 def GET_cars():
-	return str(json.dumps(cars))
+	return_obj = {}
+	return_obj['cars'] = cars
+	return str(json.dumps(return_obj))
 
 @app.route("/cars",methods=['POST'])
 def POST_cars():
