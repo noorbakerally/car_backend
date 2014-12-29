@@ -23,12 +23,12 @@ def GET_cars():
 
 @app.route("/cars",methods=['POST','OPTIONS'])
 def POST_cars():
-	args = json.loads(request.data)
+	args = request.json['car']
 	newCar = {}
 	newCar['color'] = args['color'] 
 	newCar['brand'] = args['brand']
 	newCar['plateNumber'] =  args['plateNumber']
-	newCar['id'] = len(cars)
+	newCar['id'] = len(cars) + 1
 	return_obj = {}
 	return_obj['car'] = newCar
 	cars.append(newCar)
@@ -45,13 +45,16 @@ def DELETE_cars(car_id):
 
 @app.route("/cars/<car_id>",methods=['PUT'])
 def UPDATE_cars(car_id):
-	args = json.loads(request.data)
+	args = request.json['car']
 	for i in range(len(cars)):
                 if (str(cars[i]['id']) == str(car_id)):
 			cars[i]['color'] = args['color']
         		cars[i]['brand'] = args['brand']
         		cars[i]['plateNumber'] =  args['plateNumber']
-			return str(json.dumps(cars[i]))
+			return_obj = {}
+        		return_obj['car'] = cars[i]
+        		cars.append(cars[i])
+        		return str(json.dumps(return_obj))
 	return "id doesn't exist"	
 	
 
